@@ -3,10 +3,10 @@
 Added a simple C++ script and CMake to test the implementation of C. Richter.
 
 Setup:
-1. Follow "Installation Instructions" below steps 1-3.
-2. Build the script
+1. Follow "Installation Instructions" below steps 1-3. 
+2. Build the script where "mav_trajectory" is the name of the workspace.
 ```
-cd build
+cd ~/workspaces/mav_trajectory/src/mav_trajectory_generation/build
 make
 ```
 3. Run the script
