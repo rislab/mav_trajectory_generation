@@ -6,7 +6,6 @@ Setup:
 1. Follow "Installation Instructions" below steps 1-3.
 2. Build the script
 ```
-mkdir build
 cd build
 make
 ```
