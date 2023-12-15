@@ -33,9 +33,7 @@ bool Polynomial::selectMinMaxCandidatesFromRoots(
     double t_start, double t_end,
     const Eigen::VectorXcd& roots_derivative_of_derivative,
     std::vector<double>* candidates) {
-  CHECK_NOTNULL(candidates);
   if (t_start > t_end) {
-    LOG(WARNING) << "t_start is greater than t_end.";
     return false;
   }
   candidates->clear();
@@ -65,16 +63,13 @@ bool Polynomial::selectMinMaxCandidatesFromRoots(
 bool Polynomial::computeMinMaxCandidates(
     double t_start, double t_end, int derivative,
     std::vector<double>* candidates) const {
-  CHECK_NOTNULL(candidates);
   candidates->clear();
   if (N_ - derivative - 1 < 0) {
-    LOG(WARNING) << "N - derivative - 1 has to be at least 0.";
     return false;
   }
   Eigen::VectorXcd roots;
   bool success = getRoots(derivative + 1, &roots);
   if (!success) {
-    VLOG(1) << "Couldn't find roots, polynomial may be constant.";
   }
   if (!selectMinMaxCandidatesFromRoots(t_start, t_end, roots, candidates)) {
     return false;
@@ -87,8 +82,6 @@ bool Polynomial::selectMinMaxFromRoots(
     const Eigen::VectorXcd& roots_derivative_of_derivative,
     std::pair<double, double>* minimum,
     std::pair<double, double>* maximum) const {
-  CHECK_NOTNULL(minimum);
-  CHECK_NOTNULL(maximum);
   // Find candidates in interval t_start to t_end computing the roots.
   std::vector<double> candidates;
   if (!selectMinMaxCandidatesFromRoots(
@@ -102,8 +95,6 @@ bool Polynomial::selectMinMaxFromRoots(
 bool Polynomial::computeMinMax(double t_start, double t_end, int derivative,
                                std::pair<double, double>* minimum,
                                std::pair<double, double>* maximum) const {
-  CHECK_NOTNULL(minimum);
-  CHECK_NOTNULL(maximum);
   // Find candidates in interval t_start to t_end by computing the roots.
   std::vector<double> candidates;
   if (!computeMinMaxCandidates(t_start, t_end, derivative, &candidates)) {
@@ -117,10 +108,7 @@ bool Polynomial::selectMinMaxFromCandidates(
     const std::vector<double>& candidates, int derivative,
     std::pair<double, double>* minimum,
     std::pair<double, double>* maximum) const {
-  CHECK_NOTNULL(minimum);
-  CHECK_NOTNULL(maximum);
   if (candidates.empty()) {
-    LOG(WARNING) << "Cannot find extrema from an empty candidates vector.";
     return false;
   }
   minimum->first = candidates[0];
@@ -185,7 +173,6 @@ bool Polynomial::getPolynomialWithAppendedCoefficients(
     *new_polynomial = *this;
     return true;
   } else if (new_N < N_) {
-    LOG(WARNING) << "You shan't decrease the number of coefficients.";
     *new_polynomial = *this;
     return false;
   } else {

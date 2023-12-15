@@ -1,0 +1,3 @@
+/home/jonathan/workspaces/mav_trajectory/src/mav_trajectory_generation/build/CMakeFiles/rebuild_cache.dir
+/home/jonathan/workspaces/mav_trajectory/src/mav_trajectory_generation/build/CMakeFiles/edit_cache.dir
+/home/jonathan/workspaces/mav_trajectory/src/mav_trajectory_generation/build/CMakeFiles/test_poly.dir

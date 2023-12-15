@@ -28,10 +28,6 @@ Vertex::Vector createRandomVertices(int maximum_derivative, size_t n_segments,
                                     const Eigen::VectorXd& pos_min,
                                     const Eigen::VectorXd& pos_max,
                                     size_t seed) {
-  CHECK_GE(static_cast<int>(n_segments), 1);
-  CHECK_EQ(pos_min.size(), pos_max.size());
-  CHECK_GE((pos_max - pos_min).norm(), 0.2);
-  CHECK_GT(maximum_derivative, 0);
 
   Vertex::Vector vertices;
   std::mt19937 generator(seed);
@@ -129,7 +125,6 @@ Vertex::Vector createRandomVertices1D(int maximum_derivative, size_t n_segments,
 
 void Vertex::addConstraint(int derivative_order,
                            const Eigen::VectorXd& constraint) {
-  CHECK_EQ(constraint.rows(), static_cast<long>(D_));
   constraints_[derivative_order] = constraint;
 }
 
@@ -153,7 +148,6 @@ void Vertex::makeStartOrEnd(const Eigen::VectorXd& constraint,
 }
 
 bool Vertex::getConstraint(int derivative_order, Eigen::VectorXd* value) const {
-  CHECK_NOTNULL(value);
   typename Constraints::const_iterator it = constraints_.find(derivative_order);
   if (it != constraints_.end()) {
     *value = it->second;
@@ -184,7 +178,6 @@ bool Vertex::isEqualTol(const Vertex& rhs, double tol) const {
 bool Vertex::getSubdimension(const std::vector<size_t>& subdimensions,
                              int max_derivative_order,
                              Vertex* subvertex) const {
-  CHECK_NOTNULL(subvertex);
   *subvertex = Vertex(subdimensions.size());
 
   // Check if all subdimensions exist.
@@ -211,7 +204,7 @@ std::ostream& operator<<(std::ostream& stream, const Vertex& v) {
   Eigen::IOFormat format(4, 0, ", ", "\n", "[", "]");
   for (typename Vertex::Constraints::const_iterator it = v.cBegin();
        it != v.cEnd(); ++it) {
-    stream << "  type: " << positionDerivativeToString(it->first);
+    // stream << "  type: " << positionDerivativeToString(it->first);
     stream << "  value: " << it->second.transpose().format(format) << std::endl;
   }
   return stream;
@@ -233,7 +226,6 @@ std::vector<double> estimateSegmentTimes(const Vertex::Vector& vertices,
 std::vector<double> estimateSegmentTimesVelocityRamp(
     const Vertex::Vector& vertices, double v_max, double a_max,
     double time_factor) {
-  CHECK_GE(vertices.size(), 2);
   std::vector<double> segment_times;
 
   segment_times.reserve(vertices.size() - 1);
@@ -255,7 +247,6 @@ std::vector<double> estimateSegmentTimesVelocityRamp(
 std::vector<double> estimateSegmentTimesNfabian(const Vertex::Vector& vertices,
                                                 double v_max, double a_max,
                                                 double magic_fabian_constant) {
-  CHECK_GE(vertices.size(), 2);
   std::vector<double> segment_times;
   segment_times.reserve(vertices.size() - 1);
   for (size_t i = 0; i < vertices.size() - 1; ++i) {
