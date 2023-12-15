@@ -1,3 +1,21 @@
+## Fork Addendum
+
+Added a simple C++ script and CMake to test the implementation of C. Richter.
+
+Setup:
+1. Follow "Installation Instructions" below steps 1-3.
+2. Build the script
+```
+mkdir build
+cd build
+make
+```
+3. Run the script
+```
+./test_poly
+```
+
+---
 # mav_trajectory_generation
 This repository contains tools for polynomial trajectory generation and optimization based on methods described in [1].
 These techniques are especially suitable for rotary-wing micro aerial vehicles (MAVs).
